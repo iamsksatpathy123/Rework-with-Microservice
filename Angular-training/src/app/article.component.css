@@ -1,0 +1,49 @@
+h1 {
+    font-size: 2.0em;
+    margin: 20px 0 0 0;
+    font-weight: 400;   
+}
+h3 { 
+	color: blue;
+}
+table {
+    border-collapse: collapse;
+}
+table, th, td {
+    border: 1px solid black;
+    font-size:17px;
+width: 100px;    
+}
+input {
+    width: 300px;
+    margin: 8px 0;
+	background-color: #dfdfdf;
+	font-size:17px;
+}
+button {
+    background-color: #008CBA;
+	color: white;
+}
+.error{
+    color: red;
+    font-size: 20px;
+}
+.success{
+    color: green;
+    font-size: 20px;
+}
+#page
+{
+    position: absolute;
+  width: 300px;
+  height: 100px;
+  z-index: 15;
+  top: 20%;
+  left: 50%;
+  margin: -100px 0 0 -150px;
+  
+}
+tr{
+width:200px;
+
+}

@@ -1,0 +1,66 @@
+<div id="page">
+<h1>Angular CRUD Operation</h1>
+<h2>{{dates | date :'dd-MMM-yy h:mm:ss '}}</h2>
+<h3 *ngIf="articleIdToUpdate; else create"> 
+   Update Article for Id: {{articleIdToUpdate}}
+</h3>
+<ng-template #create>
+   <h3> Create New Article </h3>
+</ng-template>
+<div>
+ <form [formGroup]="articleForm" (ngSubmit)="onArticleFormSubmit()">
+  <table>
+    <tr><td>Enter Title</td><td><input formControlName="title">
+	       <label *ngIf="articleForm.get('title').invalid && processValidation" [ngClass] = "'error'"> Title is required. </label>
+   	</td></tr>
+    <tr><td>Enter Category</td><td><input formControlName="category">
+	       <label *ngIf="articleForm.get('category').invalid && processValidation" [ngClass] = "'error'"> Category is required. </label>
+  </td></tr>	
+  <tr><td>Enter Mail or Author name</td><td><input type="mail" formControlName="mail">
+    <label *ngIf="articleForm.get('mail').invalid && processValidation" [ngClass] = "'error'"> Email is required. </label>
+</td></tr>	
+<tr><td>Enter Date</td><td><input type="datetime-local" formControlName="date" value="{{dates | date :'dd-MMM-yy h:mm:ss '}}" >
+  <label *ngIf="articleForm.get('date').invalid && processValidation" [ngClass] = "'error'"> Date is required. </label>
+</td></tr>	
+
+
+<button *ngIf="!articleIdToUpdate">CREATE</button>  
+<button *ngIf="articleIdToUpdate">UPDATE</button>  
+  <button (click)="backToCreateArticle()" *ngIf="articleIdToUpdate">Go Back</button>  
+    
+  </table>
+
+   
+</form> 
+ <br/>
+ <div *ngIf="statusCode; else processing">
+   <div *ngIf="statusCode === 201" [ngClass] = "'success'">
+	    Article added successfully.
+   </div>   
+   <div *ngIf="statusCode === 409" [ngClass] = "'success'">
+        Article already exists.
+   </div>   	
+   <div *ngIf="statusCode === 200" [ngClass] = "'success'">
+        Article updated successfully.
+   </div>   	      
+   <div *ngIf="statusCode === 204" [ngClass] = "'success'">
+        Article deleted successfully.
+   </div>   	   
+   <div *ngIf="statusCode === 500" [ngClass] = "'error'">
+        Internal Server Error.
+   </div>   	
+ </div>
+ <ng-template #processing>
+	<img *ngIf="requestProcessing" src="assets/images/loading.gif">
+ </ng-template>
+</div>
+<h3>Article Details</h3>
+<table>
+  <tr><th> Id</th><th>Title</th><th>Category</th><th>Mail/Authorname</th><th>Date</th><th>Time </th> <th>Edit</th><th>Delete</th></tr>
+  <tr *ngFor="let article of allArticles" >
+    <td>{{article.articleId}}</td> <td>{{article.title}}</td>  <td>{{article.category}}</td>  <td>{{article.mail}}</td> <td>{{article.date | date :'dd-MMM-yy'}}</td><td>{{article.date | date :'h:mm:ss '}}</td>
+	<td><button type="button" (click)="loadArticleToEdit(article.articleId)">Edit</button> </td> 
+	<td><button type="button" (click)="deleteArticle(article.articleId)">Delete</button></td>
+  </tr>
+</table>
+</div>
